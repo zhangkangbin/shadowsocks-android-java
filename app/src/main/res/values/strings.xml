@@ -19,4 +19,5 @@
     <string name="exit_confirm_info">This will disconnect the VPN connection, Are you sure to exit?</string>
     <string name="err_invalid_url">The config URL is invalid.</string>
     <string name="config_url_hint">ss://method:password@host:port</string>
+    <string name="err_reject_camera">You reject open the camera .</string>
 </resources>

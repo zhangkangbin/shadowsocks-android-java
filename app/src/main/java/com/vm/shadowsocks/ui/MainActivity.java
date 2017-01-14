@@ -1,7 +1,7 @@
 package com.vm.shadowsocks.ui;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -33,7 +34,7 @@ import com.vm.shadowsocks.core.ProxyConfig;
 
 import java.util.Calendar;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends BaseActivity implements
         View.OnClickListener,
         OnCheckedChangeListener,
         LocalVpnService.onStatusChangedListener {
@@ -150,11 +151,49 @@ public class MainActivity extends Activity implements
                 .show();
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     private void scanForProxyUrl() {
+
+        if(hasPermission(PERMISSION_CAMERA)){
+            showScan();
+        }else {
+            String[] perms = {PERMISSION_CAMERA};
+            int permsRequestCode = 200;
+            requestPermissions(perms, permsRequestCode);
+
+        }
+
+
+    }
+    private void showScan(){
         new IntentIntegrator(this)
                 .setResultDisplayDuration(0)
                 .setPrompt(getString(R.string.config_url_scan_hint))
                 .initiateScan(IntentIntegrator.QR_CODE_TYPES);
+    }
+
+    /**
+     * 权限回调
+     */
+    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
+
+        switch(permsRequestCode){
+
+            case 200:
+                boolean cameraAccepted = grantResults[0]==PackageManager.PERMISSION_GRANTED;
+                if(cameraAccepted){
+
+                    showScan();
+                }else{
+
+                    Toast.makeText(MainActivity.this, R.string.err_reject_camera, Toast.LENGTH_SHORT).show();
+
+                }
+
+                break;
+
+        }
+
     }
 
     private void showProxyUrlInputDialog() {

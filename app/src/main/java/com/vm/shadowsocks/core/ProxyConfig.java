@@ -8,11 +8,11 @@ import com.vm.shadowsocks.tunnel.Config;
 import com.vm.shadowsocks.tunnel.httpconnect.HttpConnectConfig;
 import com.vm.shadowsocks.tunnel.shadowsocks.ShadowsocksConfig;
 
-import org.apache.http.HttpResponse;
+/*import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.util.EntityUtils;*/
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -233,7 +233,7 @@ public class ProxyConfig {
         return m_isolate_http_host_header;
     }
 
-    private String[] downloadConfig(String url) throws Exception {
+  /*  private String[] downloadConfig(String url) throws Exception {
         try {
             HttpClient client = new DefaultHttpClient();
             HttpGet requestGet = new HttpGet(url);
@@ -252,7 +252,7 @@ public class ProxyConfig {
         } catch (Exception e) {
             throw new Exception(String.format("Download config file from %s failed.", url));
         }
-    }
+    }*/
 
     private String[] readConfigFromFile(String path) throws Exception {
         StringBuilder sBuilder = new StringBuilder();
@@ -283,7 +283,7 @@ public class ProxyConfig {
         loadFromLines(new String(bytes).split("\\r?\\n"));
     }
 
-    public void loadFromUrl(String url) throws Exception {
+ /*   public void loadFromUrl(String url) throws Exception {
         String[] lines = null;
         if (url.charAt(0) == '/') {
             lines = readConfigFromFile(url);
@@ -291,7 +291,7 @@ public class ProxyConfig {
             lines = downloadConfig(url);
         }
         loadFromLines(lines);
-    }
+    }*/
 
     protected void loadFromLines(String[] lines) throws Exception {
 
